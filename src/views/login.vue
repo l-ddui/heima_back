@@ -25,19 +25,22 @@
           ></el-input>
         </el-form-item>
         <!-- 登录按钮 -->
-        <el-button class="login-btn" type="primary">主要按钮</el-button>
+        <el-button @click="login" class="login-btn" type="primary"
+          >登录</el-button
+        >
       </el-form>
     </div>
   </div>
 </template>
 
 <script>
+import { userLogin } from "@/api/user";
 export default {
   data() {
     return {
       loginForm: {
-        username: "",
-        password: "",
+        username: "15918983683",
+        password: "15918983683",
       },
       // 表单验证规则
       rules: {
@@ -56,13 +59,33 @@ export default {
           // required 表示必填项，message：表示不符合规则时的提示信息  trigger：表示出发时机
           { required: true, message: "请输入3~16位密码", trigger: "blur" },
           {
-            pattern: /^.{3，16}$/,
+            pattern: /^.{3,16}$/,
             message: "请输入3~16位密码",
             trigger: "blur",
           },
         ],
       },
     };
+  },
+  methods: {
+    login() {
+      this.$refs.loginForm.validate(async (valid) => {
+        if (valid) {
+          let res = await userLogin(this.loginForm);
+          // console.log(res);
+          if (res.data.message == "登录成功") {
+            this.$message.success("登录成功");
+            // console.log(res.data.data.token);
+            localStorage.setItem("heimaback_token", res.data.data.token);
+            this.$router.push({ path: "/index" });
+          } else {
+            this.$message.error("用户名或密码输入错误");
+          }
+        } else {
+          this.$message.error("用户输入数据不合法");
+        }
+      });
+    },
   },
 };
 </script>
