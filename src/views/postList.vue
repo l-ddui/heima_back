@@ -28,6 +28,18 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页组件 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageIndex"
+        :page-sizes="[4, 6, 8, 10]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="25"
+        style="margin-top: 20px"
+      >
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -38,18 +50,40 @@ export default {
   data() {
     return {
       postList: [],
+      pageIndex: 1,
+      pageSize: 4,
     };
   },
   async mounted() {
-    let res = await getpostList();
-    this.postList = res.data.data;
+    // 页面一加载请求文章数据
+    this.init();
   },
   methods: {
-    handleEdit(scope) {
-      console.log(scope);
+    // 请求文章数据
+    async init() {
+      let res = await getpostList({
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+      });
+      this.postList = res.data.data;
     },
+    // 编辑
+    handleEdit(scope) {
+      // console.log(scope);
+    },
+    // 删除
     handleDelete(scope) {
-      console.log(scope);
+      // console.log(scope);
+    },
+    //  页面显示数据条数改变时触发
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.init();
+    },
+    // 当前页面页码改变时触发
+    handleCurrentChange(val) {
+      this.pageIndex = val;
+      this.init();
     },
   },
 };
