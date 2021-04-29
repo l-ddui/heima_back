@@ -16,7 +16,26 @@ const router = new VueRouter({
         {
             name: 'index',
             path: '/index',
-            component: () => import('@/views/index.vue')
+            component: () => import('@/views/index.vue'),
+            redirect: ({ name: 'hello' }),
+            // 嵌套路由
+            children: [
+                {
+                    name: 'hello',
+                    path: 'hello',
+                    component: () => import('@/views/hello.vue'),
+                },
+                {
+                    name: 'postPublish',
+                    path: 'postPublish',
+                    component: () => import('@/views/postPublish.vue'),
+                },
+                {
+                    name: 'postList',
+                    path: 'postList',
+                    component: () => import('@/views/postList.vue'),
+                },
+            ]
         },
     ]
 })
