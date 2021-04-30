@@ -6,6 +6,11 @@ Vue.use(VueRouter)
 // 创建路由对象
 const router = new VueRouter({
     routes: [
+        // 重定向
+        {
+            path: '/',
+            redirect: { name: 'index' }
+        },
         // 登录页面
         {
             name: 'login',
@@ -41,12 +46,12 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.name == "index") {
+    // console.log(to);
+    if (to.path.indexOf("/index/") != -1) {
         let token = localStorage.getItem('heimaback_token')
         if (token) {
             next()
         } else {
-
             next({ name: 'login' })
         }
     } else {

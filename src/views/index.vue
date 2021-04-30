@@ -4,9 +4,9 @@
       <el-aside width="200px">
         <div @click="$router.push({ name: 'index' })" class="logo"></div>
         <el-menu
+          :default-active="$route.name"
           :unique-opened="true"
           :router="true"
-          default-active="2"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
@@ -39,7 +39,7 @@
             >
             <el-menu-item index="postPublish">
               <i class="el-icon-circle-plus"></i>
-              <span>文章添加</span></el-menu-item
+              <span>文章发布</span></el-menu-item
             >
           </el-submenu>
           <!-- 栏目管理 -->

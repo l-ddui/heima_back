@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">欢迎来到90年代</div>
+  <div class="hello">我是一个组件</div>
 </template>
 
 <script>
